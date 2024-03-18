@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script>
+    function addTodo() {
+      const title = document.getElementById("title").value;
+      const desc = document.getElementById("desc").value;
+      console.log(title);
+      console.log(desc);
+      let task = document.getElementById("list");
+    }
+  </script>
+  <div>
+    <h2>To do application</h2>
+    <input type="text" id="title" placeholder="Your title  " />
+    <br />
+    <br />
+    <input type="text" placeholder="your description  " id="desc" />
+    <br />
+    <button onclick="addTodo()">Marks as done</button>
+    <div id="container">
+      <div>
+        <div>Title of todo 1</div>
+        <div>desc of todo 1</div>
+        <button>Maark as done</button>
+      </div>
+    </div>
+  </div>
+</html>
