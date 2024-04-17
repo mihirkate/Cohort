@@ -12,7 +12,7 @@ function App() {
     <div>
       hii There 
       <CreateTodo></CreateTodo>
-      <Todos></Todos>
+      <Todos todos></Todos>
     </div>
   )
 }
