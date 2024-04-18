@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const { createTodo, updateTodo } = require("./types");
 const { todo } = require("./db");
+const cors = require("cors");
 /*
  *
  *
@@ -18,7 +19,7 @@ const { todo } = require("./db");
 /* ----------------------   ------------------------------------------ */
 
 app.use(express.json());
-
+app.use(cors());
 /* ----------------------   ------------------------------------------ */
 
 app.post("/todo", async (req, res) => {
