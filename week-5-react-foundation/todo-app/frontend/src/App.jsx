@@ -6,13 +6,17 @@ import { CreateTodo } from './components/CreateTodo'
 import { Todos } from './components/Todos'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos,setTodos]=useState([]);
 
+  fetch("http://localhost:3000/todos").then(async (res)=>{
+    const json=await res.json();
+    setTodos(json.todos)
+  })
   return (
     <div>
       hii There 
       <CreateTodo></CreateTodo>
-      <Todos todos></Todos>
+      <Todos todos={todos}></Todos>
     </div>
   )
 }
