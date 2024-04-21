@@ -1,23 +1,29 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React, { useEffect, useState } from "react";
+
 function App() {
-  const [title, setTitle] = useState(" Mihir");
-  function change() {
-    setTitle(`my name is ${Math.random()}`);
-  }
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    setInterval(() => {
+      fetch("https://sum-server.100xdevs.com/todos").then(async (res) => {
+        const json = await res.json();
+        setTodos(json.todos);
+      });
+    }, 1000);
+  }, []);
   return (
-    <>
-      <button onClick={change}>Change</button>
-      <Header title={title}></Header>
-      <Header title={title}></Header>
-    </>
+    <div>
+      {todos.map(({ title, description }) => (
+        <Todo key={todos.id} title={title} description={description} />
+      ))}
+    </div>
   );
 }
-
-function Header({ title }) {
-  return <div>{title} </div>;
+function Todo({ title, description }) {
+  return (
+    <div>
+      <h1>{title}</h1>
+      <h5>{description}</h5>
+    </div>
+  );
 }
-
 export default App;
