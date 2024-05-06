@@ -2,25 +2,19 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import RevenueCard from "./Components/RevenueCard";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
-      <div style={{ display: "flex" }}>
-        <div style={{ backgroundColor: "red" }}>HIii Mihir here </div>
-        <div style={{ backgroundColor: "blue" }}>HIii Mihir here </div>
-        <div style={{ backgroundColor: "yellow" }}>HIii Mihir here </div>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      </div>
-
-      <div className="grid grid-cols-4">
-        <div style={{ backgroundColor: "red" }}>HIii Mihir here </div>
-        <div style={{ backgroundColor: "blue" }}>HIii Mihir here </div>
-        <div style={{ backgroundColor: "yellow" }}>HIii Kate here </div>
-      </div>
-    </>
+    <div className="grid grid-cols-4">
+      <RevenueCard
+        title={"Amount Pending"}
+        amount={"92,000.00"}
+        orderCount={13}
+      />
+    </div>
   );
 }
 
