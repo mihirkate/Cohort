@@ -6,7 +6,6 @@ import RevenueCard from "./Components/RevenueCard";
 
 function App() {
   const [count, setCount] = useState(0);
-
   return (
     <div className="grid grid-cols-4">
       <RevenueCard
