@@ -1,11 +1,16 @@
 interface User {
-    name: String,
-    age: number
-}
+    id: string;
+    name: string;
+    age: string;
+    email: string;
+    password: string;
+};
 
-function sumOfAge(user1: User, user2: User) {
-    return user1.age + user2.age;
-}
+type UpdateProps = Pick<User, 'name' | 'age' | 'email'>
 
-const a = sumOfAge({ name: "Mihir", age: 20 }, { name: "kate", age: 20 });
-console.log(a);
+type UpdatePropsOptional = Partial<UpdateProps>
+
+function updateUser(updatedProps: UpdatePropsOptional) {
+    // hit the database tp update the user
+}
+updateUser({})
