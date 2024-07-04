@@ -12,19 +12,26 @@ export const userRouter = new Hono<{
 
 
 userRouter.post("/signup", async (c) => {
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate())
-
     const body = await c.req.json();
     const { success } = signupInput.safeParse(body);
+    console.log(success);
+
     if (!success) {
         c.status(411);
         return c.json({
             msg: "wrong inputs"
         })
     }
+    console.log("succes:", success);
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+
     try {
+
+
         // Hash the password
         const encoder = new TextEncoder();
         const data = encoder.encode(body.password);
@@ -34,8 +41,9 @@ userRouter.post("/signup", async (c) => {
 
         const user = await prisma.user.create({
             data: {
-                email: body.email,
+                username: body.username,
                 password: hashedPassword,
+                name: body.name
             }
         })
 
@@ -46,8 +54,9 @@ userRouter.post("/signup", async (c) => {
         });
     }
     catch (e) {
-        c.status(403);
-        return c.json({ error: "user already exists" });
+        console.log(e);
+        c.status(411);
+        return c.text('Invalid')
     }
 })
 
@@ -67,9 +76,9 @@ userRouter.post('/signin', async (c) => {
     const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
         where: {
-            email: body.email,
+            username: body.username,
             password: hashedPassword,
         }
     });
