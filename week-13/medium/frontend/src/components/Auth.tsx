@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@mihirkate/medium-common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { set } from "mongoose";
+
 
 export default function Auth({ type }: { type: "signup" | "signin" }) {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [postInput, setPostInput] = useState<SignupInput>({
         name: "",
         username: "",
@@ -14,11 +14,25 @@ export default function Auth({ type }: { type: "signup" | "signin" }) {
     });
 
 
-   async function sendRequest(){
-      const response=await  axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`,postInput);
-      const jwt=response.data;
-      localStorage.setItem("token",jwt);
-      navigate("/blogs");
+    async function sendRequest() {
+        try {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInput);
+            console.log("Full response:", response); // Log the full response
+            console.log("Response data:", response.data); // Log the data part of the response
+            const jwt = response.data.jwt;
+            console.log(jwt);
+             // Access the 'jwt' key instead of 'token'
+            localStorage.setItem("token", jwt);
+            navigate("/blogs");
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Axios error:", error.response?.data);
+                alert(`Error: ${error.response?.data?.message || "Unknown error"}`);
+            } else {
+                console.error("Unexpected error:", error);
+                alert("Unexpected error occurred");
+            }
+        }
     }
     return (
         <div className="bg-slate-200 h-screen flex justify-center items-center">
